@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Repaso - FICDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ficde-azul-dark: #134252;
+            --ficde-azul-light: #2c5c6e;
+            --ficde-naranja: #e68161;
+            --ficde-naranja-hover: #ff9f85;
+            --tarjeta-bg: #f0f4f5;
+            --input-bg: #e2e8eb;
+            --texto-principal: #0f2d38;
+            --texto-secundario: #4a636e;
+            --verde-exito: #2e7d32;
+            --verde-bg: #c8e6c9;
+            --rojo-error: #c62828;
+            --naranja-bg: #ffe0b2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--ficde-azul-dark) 0%, #0a252e 100%);
+            min-height: 100vh;
+            color: var(--texto-principal);
+            padding: 20px;
+            background-attachment: fixed;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-img { height: 50px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+
+        .module-tag {
+            background: var(--ficde-naranja);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .welcome-card {
+            background: var(--tarjeta-bg);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-bottom: 6px solid var(--ficde-naranja);
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: var(--ficde-azul-dark);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .fede-avatar-large {
+            width: 140px; height: 140px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: var(--ficde-naranja);
+            padding: 5px;
+            box-shadow: 0 10px 25px rgba(230, 129, 97, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .fede-avatar-large:hover { transform: scale(1.1); }
+
+        .fede-avatar-large img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+        }
+
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .block-card {
+            background: var(--tarjeta-bg);
+            padding: 30px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .block-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ficde-naranja);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .block-icon {
+            font-size: 3rem; margin-bottom: 15px;
+            background: rgba(19, 66, 82, 0.1);
+            width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; color: var(--ficde-azul-dark);
+        }
+
+        .block-title { color: var(--ficde-azul-dark); font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+
+        .block-desc { color: var(--texto-secundario); font-size: 0.9rem; line-height: 1.5; }
+
+        .activity-screen {
+            display: none;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .activity-screen.active { display: grid; }
+
+        .tutor-sidebar {
+            background: var(--ficde-azul-light);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            position: sticky; top: 20px;
+        }
+
+        .tutor-bubble {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--ficde-azul-dark);
+            margin-top: 20px;
+            position: relative;
+            text-align: left;
+        }
+
+        .tutor-bubble::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            border-width: 0 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent rgba(255,255,255,0.95);
+            transform: translateX(-50%);
+        }
+
+        .activity-content {
+            background: var(--tarjeta-bg);
+            padding: 40px;
+            border-radius: 16px;
+            min-height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .act-badge {
+            background: var(--ficde-naranja);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .act-title { font-size: 1.8rem; color: var(--ficde-azul-dark); margin: 15px 0; font-weight: 800; }
+
+        .act-instruction { font-size: 1.1rem; color: var(--texto-secundario); margin-bottom: 30px; }
+
+        .student-input {
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--ficde-azul-dark);
+            transition: all 0.3s;
+        }
+
+        .student-input:focus { background: white; border-color: var(--ficde-naranja); outline: none; }
+
+        .fill-input {
+            border: none;
+            border-bottom: 2px solid var(--ficde-naranja);
+            background: transparent;
+            font-weight: 700;
+            color: var(--ficde-azul-dark);
+            text-align: center;
+            width: 150px;
+            font-size: 1.1rem;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--ficde-naranja), #ff9f85);
+            color: white;
+            box-shadow: 0 6px 20px rgba(230, 129, 97, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-action:hover { transform: translateY(-3px); }
+
+        .btn-back {
+            background: transparent;
+            color: var(--texto-secundario);
+            box-shadow: none;
+            border: 2px solid #ccc;
+            margin-top: 15px;
+        }
+
+        .btn-back:hover { background: #e0e0e0; color: var(--ficde-azul-dark); }
+
+        .traffic-row, .checklist-item {
+            background: white;
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .traffic-row:hover, .checklist-item:hover { border-color: var(--ficde-naranja); transform: translateX(5px); }
+
+        .traffic-btn {
+            width: 35px; height: 35px;
+            border-radius: 50%; border: 2px solid #ddd;
+            cursor: pointer;
+            opacity: 0.3;
+        }
+
+        .traffic-btn.active { opacity: 1; transform: scale(1.2); border-color: var(--ficde-azul-dark); }
+
+        .bg-green { background: #4CAF50; }
+
+        .bg-yellow { background: #FFC107; }
+
+        .bg-red { background: #f44336; }
+
+        .check-box {
+            width: 24px; height: 24px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .checklist-item.selected { border-color: var(--ficde-naranja); background: #fff5f0; }
+
+        .checklist-item.selected .check-box { background: var(--ficde-naranja); border-color: var(--ficde-naranja); color: white; }
+
+        .feedback-area {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: slideUp 0.4s;
+        }
+
+        .feedback-success { background: var(--verde-bg); color: #1b5e20; border-left: 6px solid var(--verde-exito); }
+
+        .feedback-retry { background: var(--naranja-bg); color: #bf360c; border-left: 6px solid #ef6c00; }
+
+        .feedback-fail { background: #cfd8dc; color: #37474f; border-left: 6px solid #455a64; }
+
+        #musicToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--ficde-naranja);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .activity-screen { grid-template-columns: 1fr; }
+            .tutor-sidebar { display: flex; align-items: center; gap: 20px; }
+            .fede-avatar-large { width: 80px; height: 80px; }
+            .tutor-bubble::after { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- AUDIOS MP3 - Todos en la misma carpeta -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="chill-study-desk-focus-concentration-lofi-451180.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="saludoInicial" preload="auto" src="saludoinicial.mp3"></audio>
+    <audio id="mensaje1Ejercicios" preload="auto" src="mensaje1ejercicios.mp3"></audio>
+    <audio id="mensaje2Ejercicios" preload="auto" src="mensaje2ejercicios.mp3"></audio>
+    <audio id="mensaje3Ejercicios" preload="auto" src="mensaje3ejercicios.mp3"></audio>
+    <audio id="mensaje4Ejercicios" preload="auto" src="mensaje4ejercicios.mp3"></audio>
+    <audio id="respuestaCorrecta" preload="auto" src="respuestacorrecta.mp3"></audio>
+    <audio id="primerError" preload="auto" src="primererror.mp3"></audio>
+    <audio id="segundoError" preload="auto" src="segundoerror.mp3"></audio>
+    <audio id="loLograste" preload="auto" src="lolograste.mp3"></audio>
+
+    <audio id="hoverSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.m4a"></audio>
+    <audio id="clickSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a"></audio>
+    <audio id="successSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.m4a"></audio>
+
+    <button id="musicToggle" onclick="toggleMusic()">🔇</button>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="FICDE" class="logo-img" onerror="this.style.display='none'; document.getElementById('altLogo').style.display='block'">
+                <h2 id="altLogo" style="display:none; color:white; font-weight:800;">FICDE</h2>
+            </div>
+            <div class="module-tag">Módulo El liderazgo y la gestión</div>
+        </header>
+
+        <div id="selectionScreen">
+            <div class="welcome-card">
+                <div class="fede-avatar-large" onclick="playAudio('saludoInicial')">
+                    <img src="personaje.gif" alt="Fede">
+                </div>
+                <h1 class="welcome-title">Espacio de Repaso Interactivo</h1>
+                <p style="color: var(--texto-secundario); font-size: 1.1rem;">Donde el conocimiento se convierte en acción</p>
+            </div>
+
+            <div class="blocks-grid">
+                <div class="block-card" onclick="startModule('sintesis')">
+                    <div class="block-icon">🧠</div>
+                    <div class="block-title">Síntesis</div>
+                    <div class="block-desc">Conceptos clave sobre liderazgo, delegación, comunicación interna, clima laboral, distribución de tareas y registro escrito en la gestión de equipos.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('analisis')">
+                    <div class="block-icon">🔍</div>
+                    <div class="block-title">Análisis Crítico</div>
+                    <div class="block-desc">Análisis de conflictos, decisiones unilaterales, desmotivación, responsabilidad compartida, necesidad de registro y acciones de mejora en la gestión del equipo.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('escenarios')">
+                    <div class="block-icon">🎬</div>
+                    <div class="block-title">Escenarios</div>
+                    <div class="block-desc">Situaciones prácticas de reuniones, conflictos, delegación de tareas, seguimiento de planes, actas, liderazgo autoritario y preventivo dentro del equipo.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('practica')">
+                    <div class="block-icon">⚡</div>
+                    <div class="block-title">Práctica</div>
+                    <div class="block-desc">Ejercitación para registrar movimientos, analizar errores, cubrir vacantes, usar documentación válida y aplicar buenas prácticas de liderazgo y organización.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="activityScreen" class="activity-screen">
+            <div class="tutor-sidebar">
+                <div class="fede-avatar-large" style="width: 100px; height: 100px; border-color: var(--ficde-naranja);" onclick="replayTutorMessage()">
+                    <img src="personaje.gif" alt="Fede">
+                </div>
+                <div style="flex:1;">
+                    <h3 style="color:var(--ficde-naranja); margin-bottom:5px;">Tutor Fede</h3>
+                    <div class="tutor-bubble" id="tutorMessage"></div>
+                </div>
+            </div>
+
+            <div class="activity-content" id="activityContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== GESTIÓN DE AUDIO MP3 =====
+        const audioFiles = {
+            saludoInicial: document.getElementById('saludoInicial'),
+            mensaje1: document.getElementById('mensaje1Ejercicios'),
+            mensaje2: document.getElementById('mensaje2Ejercicios'),
+            mensaje3: document.getElementById('mensaje3Ejercicios'),
+            mensaje4: document.getElementById('mensaje4Ejercicios'),
+            correcto: document.getElementById('respuestaCorrecta'),
+            error1: document.getElementById('primerError'),
+            error2: document.getElementById('segundoError'),
+            lolograste: document.getElementById('loLograste')
+        };
+
+        function playAudio(audioKey) {
+            if (audioFiles[audioKey]) {
+                audioFiles[audioKey].currentTime = 0;
+                audioFiles[audioKey].play().catch(err => console.log('Error al reproducir audio:', err));
+            }
+        }
+
+        const bgMusic = document.getElementById('bgMusic');
+        const clickSoundEl = document.getElementById('clickSound');
+        const successSoundEl = document.getElementById('successSound');
+        const hoverSoundEl = document.getElementById('hoverSound');
+
+        let musicOn = false;
+        let audioUnlocked = false;
+
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            [clickSoundEl, successSoundEl, hoverSoundEl].forEach(a => {
+                a.volume = 0;
+                const p = a.play();
+                if (p) p.then(() => { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(()=>{});
+            });
+            audioUnlocked = true;
+        }
+
+        document.addEventListener('pointerdown', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
+
+        function toggleMusic() {
+            unlockAudio();
+            if (!musicOn) {
+                bgMusic.volume = 0.1;
+                bgMusic.play().catch(() => {});
+                document.getElementById('musicToggle').innerText = '🎵';
+            } else {
+                bgMusic.pause();
+                document.getElementById('musicToggle').innerText = '🔇';
+            }
+            musicOn = !musicOn;
+        }
+
+        function playSound(type) {
+            if (!audioUnlocked) return;
+            try {
+                if (type === 'click') { clickSoundEl.currentTime=0; clickSoundEl.volume=0.8; clickSoundEl.play().catch(()=>{}); }
+                if (type === 'success') { successSoundEl.currentTime=0; successSoundEl.volume=0.8; successSoundEl.play().catch(()=>{}); }
+                if (type === 'hover') { hoverSoundEl.currentTime=0; hoverSoundEl.volume=0.2; hoverSoundEl.play().catch(()=>{}); }
+            } catch (e) {}
+        }
+
+        function wireUiSounds() {
+            document.querySelectorAll('.block-card, .btn-action, .checklist-item, .traffic-row, .fede-avatar-large').forEach(el => {
+                if (el.dataset.sound === '1') return;
+                el.dataset.sound = '1';
+                el.addEventListener('mouseenter', () => playSound('hover'));
+                el.addEventListener('click', () => playSound('click'));
+            });
+        }
+
+        window.addEventListener('load', wireUiSounds);
+
+        // ===== NORMALIZACIÓN DE TEXTO =====
+        function normalizar(txt) {
+            return txt
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase();
+        }
+
+     // ACTIVIDADES – versión corregida (validaciones de texto flexibles)
+const modules = {
+
+  // ============== SÍNTESIS ==============
+  sintesis: [
+    {
+      type: 'text',
+      badge: 'Liderazgo',
+      title: 'El liderazgo como proceso humano',
+      instruction: 'Leé el material de estudio y reconocé las ideas centrales sobre el liderazgo.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('liderazgo')) c++;
+        if (v.includes('proceso')) c++;
+        if (v.includes('influenc')) c++;
+        if (v.includes('objetivo')) c++;
+        if (v.includes('equipo') || v.includes('personas') || v.includes('grupo')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá el liderazgo más allá del cargo o la autoridad formal.',
+      explanation: 'El liderazgo es un proceso de influencia que se ejerce sobre las personas para orientar sus acciones hacia objetivos compartidos.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Liderazgo moderno',
+      title: 'El líder-coach',
+      instruction: 'Leé el material de estudio y reconocé las características del líder-coach.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('lider-coach') || v.includes('coach') || v.includes('coaching')) c++;
+        if (v.includes('desarrollo') || v.includes('potencial')) c++;
+        if (v.includes('confianza')) c++;
+        if (v.includes('aprendizaje')) c++;
+        if (v.includes('acompan') || v.includes('facilita')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá en un líder que acompaña en lugar de imponer.',
+      explanation: 'El líder-coach es aquel que incorpora herramientas del coaching a su estilo de liderazgo.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Liderazgo',
+      title: 'Características del líder-coach',
+      instruction: 'Seleccioná las afirmaciones que correspondan a las características del líder-coach.',
+      items: [
+        { text: 'Promueve el desarrollo del potencial de las personas', correct: true },
+        { text: 'Genera un clima de confianza', correct: true },
+        { text: 'Transfiere permanentemente su experiencia personal', correct: false },
+        { text: 'Favorece el aprendizaje autónomo', correct: true },
+        { text: 'Se centra solo en los errores del pasado', correct: false }
+      ],
+      tutor: 'Pensá si el líder acompaña el proceso o da respuestas cerradas.',
+      explanation: 'El líder-coach acompaña, confía y facilita el aprendizaje, evitando imponer soluciones propias.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Coaching',
+      title: 'El coaching como habilidad de liderazgo',
+      instruction: 'Leé el material de estudio y comprendé el rol del coaching en el liderazgo actual.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('coaching')) c++;
+        if (v.includes('desempeno') || v.includes('desempeño')) c++;
+        if (v.includes('liderazgo')) c++;
+        if (v.includes('herramienta')) c++;
+        if (v.includes('autoconocimiento')) c++;
+        if (v.includes('grupal') || v.includes('grupo')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá el coaching como una herramienta, no como una ideología.',
+      explanation: 'El coaching aplicado al liderazgo permite mejorar el desempeño individual y grupal a partir del autoconocimiento.' // 
+    },
+    {
+      type: 'blanks',
+      badge: 'Motivación',
+      title: 'Motivación y metas',
+      instruction:
+        'Completá las frases.<br>' +
+        'La motivación impulsa la ______ hacia un objetivo.<br>' +
+        'La motivación puede tener origen interno o ______.<br>' +
+        'El compromiso aumenta cuando las metas son ______.',
+      blanks: ['conducta', 'externo', 'claras'],
+      tutor: 'Pensá qué impulsa a actuar, de dónde surge y qué ayuda a sostener el esfuerzo.',
+      explanation: 'La motivación impulsa la conducta, puede originarse interna o externamente y se fortalece cuando las metas son claras.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Clima laboral',
+      title: 'Liderazgo y clima de trabajo',
+      instruction: 'Leé el material de estudio y reconocé la relación entre liderazgo y clima laboral.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('clima')) c++;
+        if (v.includes('laboral') || v.includes('trabajo')) c++;
+        if (v.includes('motivacion')) c++;
+        if (v.includes('liderazgo')) c++;
+        if (v.includes('confianza') || v.includes('positivo') || v.includes('ambiente')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá cómo se sienten las personas cuando el liderazgo es positivo.',
+      explanation: 'El liderazgo influye directamente en el clima laboral y puede generar un ambiente motivador que favorece el compromiso y la cooperación.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Gestión del equipo',
+      title: 'Prácticas que favorecen un buen clima',
+      instruction: 'Seleccioná las afirmaciones que correspondan a prácticas que favorecen un buen clima grupal.',
+      items: [
+        { text: 'Comunicación clara', correct: true },
+        { text: 'Reconocimiento del trabajo', correct: true },
+        { text: 'Control excesivo', correct: false },
+        { text: 'Apoyo entre integrantes', correct: true },
+        { text: 'Falta de participación', correct: false }
+      ],
+      tutor: 'Pensá qué prácticas generan confianza y bienestar.',
+      explanation: 'La comunicación, el reconocimiento y el apoyo fortalecen el clima grupal.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Gestión del tiempo',
+      title: 'El tiempo como recurso',
+      instruction: 'Comprendé la importancia de la gestión del tiempo.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('tiempo')) c++;
+        if (v.includes('recurso')) c++;
+        if (v.includes('prioridad')) c++;
+        if (v.includes('planific') || v.includes('organizar')) c++;
+        if (v.includes('objetivo')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá si hacer más siempre significa avanzar mejor.',
+      explanation: 'El tiempo es un recurso limitado e irremplazable que debe gestionarse de manera consciente.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Gestión del tiempo',
+      title: 'Uso eficaz del tiempo',
+      instruction: 'Marcá las afirmaciones correctas respecto a la gestión del tiempo.',
+      items: [
+        { text: 'Gestionar el tiempo implica hacer más tareas en menos tiempo.', color: 'red' },
+        { text: 'No todo lo urgente es necesariamente importante.', color: 'green' },
+        { text: 'Administrar el tiempo requiere definir prioridades y objetivos.', color: 'green' }
+      ],
+      tutor: 'Pensá si estar ocupado siempre significa ser productivo.',
+      explanation: 'Gestionar el tiempo implica priorizar lo importante, no solo lo urgente.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Empowerment',
+      title: 'Empoderamiento y trabajo en equipo',
+      instruction: 'Reconocé el sentido del empowerment en los equipos.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('empowerment') || v.includes('empoderamiento')) c++;
+        if (v.includes('responsabil')) c++;
+        if (v.includes('compromiso')) c++;
+        if (v.includes('equipo') || v.includes('trabajo en equipo')) c++;
+        if (v.includes('autonomia') || v.includes('autonomía')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué pasa cuando se delega poder y responsabilidad en el equipo.',
+      explanation: 'El empowerment consiste en delegar poder y responsabilidad, permitiendo que las personas participen activamente en las decisiones y se comprometan con los resultados.' // 
+    }
+  ],
+
+  // ============== ANÁLISIS ==============
+  analisis: [
+    {
+      type: 'text',
+      badge: 'Liderazgo',
+      title: 'Análisis del rol del líder en los grupos',
+      instruction: 'Analizá el rol del líder en los grupos.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('lider') || v.includes('liderazgo')) c++;
+        if (v.includes('responsabil')) c++;
+        if (v.includes('influenc')) c++;
+        if (v.includes('grupo') || v.includes('dinamica')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá cómo las decisiones del líder impactan en el grupo.',
+      explanation: 'El líder cumple un rol central en la dinámica del grupo, influyendo en la motivación, el clima y el compromiso.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Liderazgo moderno',
+      title: 'Análisis del enfoque líder-coach',
+      instruction: 'Reflexioná sobre el enfoque del líder-coach.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('lider-coach') || v.includes('coach') || v.includes('coaching')) c++;
+        if (v.includes('acompan') || v.includes('acompaña')) c++;
+        if (v.includes('desarrollo')) c++;
+        if (v.includes('aprendizaje')) c++;
+        if (v.includes('facilita') || v.includes('facilitador')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá si el líder enseña o facilita el aprendizaje.',
+      explanation: 'El enfoque del líder-coach se basa en acompañar a las personas en su proceso de desarrollo.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Liderazgo',
+      title: 'Prácticas del liderazgo tradicional y del líder-coach',
+      instruction: 'Seleccioná las afirmaciones que correspondan al enfoque del líder-coach.',
+      items: [
+        { text: 'Promueve la reflexión', correct: true },
+        { text: 'Centraliza todas las decisiones', correct: false },
+        { text: 'Se apoya en la confianza', correct: true },
+        { text: 'Evita la participación del equipo', correct: false },
+        { text: 'Facilita el autoconocimiento', correct: true }
+      ],
+      tutor: 'Pensá si el liderazgo habilita o limita la participación.',
+      explanation: 'El líder-coach fomenta la reflexión, la confianza y el desarrollo personal.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Motivación',
+      title: 'Motivación y desempeño grupal',
+      instruction: 'Analizá la relación entre motivación y desempeño.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('motivacion')) c++;
+        if (v.includes('compromiso')) c++;
+        if (v.includes('desempeno') || v.includes('desempeño')) c++;
+        if (v.includes('esfuerzo')) c++;
+        if (v.includes('responsabil')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué ocurre cuando la motivación disminuye.',
+      explanation: 'La motivación influye directamente en el desempeño de los grupos.' // 
+    },
+    {
+      type: 'blanks',
+      badge: 'Gestión del tiempo',
+      title: 'Uso consciente del tiempo',
+      instruction:
+        'Completá las frases.<br>' +
+        'El tiempo es un recurso que no se puede ______.<br>' +
+        'Gestionar el tiempo implica establecer ______.<br>' +
+        'No todo lo urgente es ______.',
+      blanks: ['recuperar', 'prioridades', 'importante'],
+      tutor: 'Pensá en el valor del tiempo y en cómo se toman decisiones diarias.',
+      explanation: 'El tiempo es irreemplazable; gestionarlo implica priorizar lo importante sobre lo urgente.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Gestión del tiempo',
+      title: 'Análisis crítico del uso del tiempo',
+      instruction: 'Reflexioná sobre el uso cotidiano del tiempo.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('tiempo')) c++;
+        if (v.includes('prioridad')) c++;
+        if (v.includes('planific') || v.includes('organizar')) c++;
+        if (v.includes('resultado') || v.includes('objetivo')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá si estar ocupado siempre genera resultados.',
+      explanation: 'Hacer muchas tareas no garantiza mejores resultados si no están alineadas con los objetivos prioritarios.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Gestión del tiempo',
+      title: 'Prácticas que mejoran el uso del tiempo',
+      instruction: 'Seleccioná las afirmaciones que correspondan a prácticas adecuadas de gestión del tiempo.',
+      items: [
+        { text: 'Definir prioridades', correct: true },
+        { text: 'Evitar toda planificación', correct: false },
+        { text: 'Hacer varias tareas al mismo tiempo', correct: false },
+        { text: 'Delegar tareas cuando es posible', correct: true },
+        { text: 'Establecer objetivos claros', correct: true }
+      ],
+      tutor: 'Pensá qué acciones ayudan a organizar mejor el día.',
+      explanation: 'Priorizar, delegar y definir objetivos mejora el uso del tiempo.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Empowerment',
+      title: 'Análisis del empoderamiento en los equipos',
+      instruction: 'Analizá el impacto del empowerment en los grupos.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('empowerment') || v.includes('empoderamiento')) c++;
+        if (v.includes('compromiso')) c++;
+        if (v.includes('responsabil')) c++;
+        if (v.includes('equipo')) c++;
+        if (v.includes('participac') || v.includes('involucr')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué sucede cuando las personas asumen mayor responsabilidad.',
+      explanation: 'El empowerment fortalece el compromiso y la participación al otorgar responsabilidad y autonomía.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Empowerment',
+      title: 'Responsabilidad y poder en los equipos',
+      instruction: 'Marcá las afirmaciones correctas respecto al empowerment.',
+      items: [
+        { text: 'El empowerment implica delegar poder y responsabilidad.', color: 'green' },
+        { text: 'El empowerment elimina toda forma de liderazgo.', color: 'red' },
+        { text: 'El empowerment favorece el compromiso del equipo.', color: 'green' }
+      ],
+      tutor: 'Pensá si empoderar es abandonar o acompañar.',
+      explanation: 'El empowerment fortalece el compromiso al combinar autonomía con acompañamiento.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Liderazgo y valores',
+      title: 'Análisis del liderazgo ético',
+      instruction: 'Reflexioná sobre la importancia de los valores en el liderazgo.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('valores')) c++;
+        if (v.includes('etica') || v.includes('etico') || v.includes('ético')) c++;
+        if (v.includes('liderazgo') || v.includes('lider')) c++;
+        if (v.includes('confianza') || v.includes('legitimi') || v.includes('coherenc')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué pasa cuando el liderazgo pierde valores.',
+      explanation: 'El liderazgo basado en valores orienta las decisiones hacia el bien común y fortalece la confianza del grupo.' // 
+    }
+  ],
+
+  // ============== ESCENARIOS ==============
+  escenarios: [
+    {
+      type: 'text',
+      badge: 'Liderazgo',
+      title: 'Situación de liderazgo en el equipo',
+      instruction: 'Analizá el rol del líder y la escucha activa.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('lider')) c++;
+        if (v.includes('escucha')) c++;
+        if (v.includes('equipo') || v.includes('grupo')) c++;
+        if (v.includes('objetivo') || v.includes('compromiso')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué cambia cuando el líder escucha.',
+      explanation: 'La escucha activa permite fortalecer el compromiso y orientar al grupo hacia objetivos compartidos.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Liderazgo',
+      title: 'Conductas del líder en la situación',
+      instruction: 'Marcá las afirmaciones correctas respecto a la conducta del líder.',
+      items: [
+        { text: 'Escuchar al equipo favorece el compromiso grupal.', color: 'green' },
+        { text: 'Ignorar las opiniones mejora el desempeño.', color: 'red' },
+        { text: 'Definir objetivos compartidos fortalece al grupo.', color: 'green' }
+      ],
+      tutor: 'Pensá qué conductas acercan al grupo.',
+      explanation: 'La escucha y los objetivos comunes fortalecen al equipo.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Motivación',
+      title: 'Análisis de la motivación en el grupo',
+      instruction: 'Reflexioná sobre la motivación.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('motivacion')) c++;
+        if (v.includes('objetivo') || v.includes('sentido')) c++;
+        if (v.includes('equipo') || v.includes('grupo')) c++;
+        if (v.includes('escucha') || v.includes('redefinir')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué impacto tiene el sentido de las tareas.',
+      explanation: 'Cuando las tareas tienen sentido, la motivación aumenta.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Motivación',
+      title: 'Factores presentes en la situación',
+      instruction: 'Seleccioná los factores que favorecen la motivación del grupo.',
+      items: [
+        { text: 'Escucha activa', correct: true },
+        { text: 'Objetivos claros', correct: true },
+        { text: 'Participación', correct: true },
+        { text: 'Falta de reconocimiento', correct: false },
+        { text: 'Control excesivo', correct: false }
+      ],
+      tutor: 'Pensá qué acciones impulsan al grupo.',
+      explanation: 'La motivación crece con participación y objetivos claros.' //
+    },
+    {
+      type: 'text',
+      badge: 'Gestión del tiempo',
+      title: 'Situación de desorganización',
+      instruction: 'Analizá qué se ve afectado por la falta de prioridades.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('tiempo')) c++;
+        if (v.includes('prioridad')) c++;
+        if (v.includes('resultado') || v.includes('plazo')) c++;
+        if (v.includes('sobrecarga') || v.includes('muchas tareas')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá si el problema es la cantidad o el uso del tiempo.',
+      explanation: 'La falta de prioridades afecta los resultados.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Gestión del tiempo',
+      title: 'Análisis de conductas',
+      instruction: 'Marcá las afirmaciones correctas respecto a la gestión del tiempo.',
+      items: [
+        { text: 'Trabajar más horas garantiza mejores resultados.', color: 'red' },
+        { text: 'Definir prioridades mejora la eficiencia.', color: 'green' },
+        { text: 'No todo lo urgente es importante.', color: 'green' }
+      ],
+      tutor: 'Pensá en qué enfocás tu energía.',
+      explanation: 'Priorizar mejora el uso del tiempo.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Empowerment',
+      title: 'Situación de delegación',
+      instruction: 'Analizá el enfoque del líder.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let puntos = 0;
+        if (v.includes('delegacion') || v.includes('delega')) puntos++;
+        if (v.includes('lider')) puntos++;
+        if (v.includes('equipo')) puntos++;
+        if (v.includes('responsabil')) puntos++;
+        if (v.includes('compromiso')) puntos++;
+        if (v.includes('confia') || v.includes('confianza')) puntos++;
+        return puntos >= 2;
+      },
+      tutor: 'Pensá qué ocurre cuando se confía en el equipo y se comparten responsabilidades.',
+      explanation: 'La delegación fortalece el compromiso del equipo y la confianza en el líder.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Empowerment',
+      title: 'Efectos en el equipo',
+      instruction: 'Seleccioná las afirmaciones que reflejan efectos del empowerment.',
+      items: [
+        { text: 'Mayor compromiso', correct: true },
+        { text: 'Pasividad del equipo', correct: false },
+        { text: 'Inquietud creativa', correct: true },
+        { text: 'Desinterés', correct: false },
+        { text: 'Responsabilidad', correct: true }
+      ],
+      tutor: 'Pensá qué cambia cuando hay autonomía.',
+      explanation: 'El empowerment aumenta compromiso y responsabilidad.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Trabajo en equipo',
+      title: 'Situación de cooperación',
+      instruction: 'Analizá la dinámica grupal.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('cooperacion') || v.includes('cooperación')) c++;
+        if (v.includes('colabora') || v.includes('colaboracion')) c++;
+        if (v.includes('objetivo') || v.includes('meta')) c++;
+        if (v.includes('juntos') || v.includes('equipo')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué permite lograr más juntos.',
+      explanation: 'La cooperación potencia los resultados grupales.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Trabajo en equipo',
+      title: 'Dinámica cooperativa',
+      instruction: 'Marcá las afirmaciones correctas respecto al trabajo en equipo.',
+      items: [
+        { text: 'La cooperación mejora el logro de objetivos.', color: 'green' },
+        { text: 'El trabajo en equipo elimina responsabilidades individuales.', color: 'red' },
+        { text: 'La coordinación favorece la sinergia.', color: 'green' }
+      ],
+      tutor: 'Pensá qué se logra trabajando juntos.',
+      explanation: 'La cooperación genera mejores resultados.' // 
+    }
+  ],
+
+  // ============== PRÁCTICA ==============
+  practica: [
+    {
+      type: 'checklist',
+      badge: 'Liderazgo',
+      title: 'Acciones prácticas del líder',
+      instruction: 'Seleccioná las acciones propias de un liderazgo efectivo.',
+      items: [
+        { text: 'Comunicación clara', correct: true },
+        { text: 'Reconocimiento del esfuerzo', correct: true },
+        { text: 'Escucha activa', correct: true },
+        { text: 'Desinterés por el equipo', correct: false },
+        { text: 'Imposición constante', correct: false }
+      ],
+      tutor: 'Pensá qué acciones fortalecen el vínculo con el equipo.',
+      explanation: 'La escucha, la comunicación y el reconocimiento fortalecen el liderazgo.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Motivación',
+      title: 'Aplicación práctica de la motivación',
+      instruction: 'Reconocé cómo se motiva a un equipo.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('motivacion')) c++;
+        if (v.includes('tarea') || v.includes('sentido')) c++;
+        if (v.includes('participacion')) c++;
+        if (v.includes('reconoc')) c++;
+        if (v.includes('compromiso')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué hace que una tarea valga la pena.',
+      explanation: 'La motivación aumenta cuando las tareas tienen sentido, se reconocen los esfuerzos y se promueve la participación.' //
+    },
+    {
+      type: 'blanks',
+      badge: 'Gestión del equipo',
+      title: 'Compromiso grupal',
+      instruction:
+        'Completá las frases.<br>' +
+        'El compromiso aumenta cuando se asignan ______.<br>' +
+        'La participación se fortalece con clara ______.<br>' +
+        'La confianza se construye con ______.',
+      blanks: ['responsabilidades', 'comunicacion', 'coherencia'],
+      tutor: 'Pensá en qué condiciones te sentís más involucrado.',
+      explanation: 'Responsabilidades, comunicación y coherencia fortalecen el compromiso.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Motivación',
+      title: 'Prácticas motivadoras',
+      instruction: 'Marcá las afirmaciones correctas respecto a la motivación grupal.',
+      items: [
+        { text: 'Asignar responsabilidades favorece la motivación.', color: 'green' },
+        { text: 'Reconocer el esfuerzo mejora el compromiso.', color: 'green' },
+        { text: 'Ignorar los aportes del equipo motiva.', color: 'red' }
+      ],
+      tutor: 'Pensá qué acciones impulsan a participar.',
+      explanation: 'La motivación crece con responsabilidad y reconocimiento.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Gestión del tiempo',
+      title: 'Organización diaria',
+      instruction: 'Analizá qué implica organizar el tiempo.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('tiempo')) c++;
+        if (v.includes('planific') || v.includes('organizar')) c++;
+        if (v.includes('tarea') || v.includes('actividad')) c++;
+        if (v.includes('prioridad')) c++;
+        if (v.includes('importante')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá si todo lo que hacés es igual de importante.',
+      explanation: 'Organizar el tiempo implica priorizar tareas alineadas con los objetivos y evitar la sobrecarga innecesaria.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Gestión del tiempo',
+      title: 'Buenas prácticas',
+      instruction: 'Seleccioná las prácticas que mejoran la gestión del tiempo.',
+      items: [
+        { text: 'Definir prioridades', correct: true },
+        { text: 'Postergar decisiones', correct: false },
+        { text: 'Delegar tareas', correct: true },
+        { text: 'Hacer todo al mismo tiempo', correct: false },
+        { text: 'Planificar actividades', correct: true }
+      ],
+      tutor: 'Pensá qué prácticas te ayudan a organizarte mejor.',
+      explanation: 'Priorizar, delegar y planificar mejora el uso del tiempo.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Empowerment',
+      title: 'Aplicación del empoderamiento',
+      instruction: 'Analizá el impacto del empowerment.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('empowerment') || v.includes('empoderamiento')) c++;
+        if (v.includes('autonomia') || v.includes('autonomía')) c++;
+        if (v.includes('responsabil')) c++;
+        if (v.includes('confia') || v.includes('confianza')) c++;
+        if (v.includes('compromiso')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué pasa cuando confiás en el equipo.',
+      explanation: 'El empowerment promueve la autonomía y la responsabilidad, fortaleciendo el compromiso del equipo.' // 
+    },
+    {
+      type: 'traffic',
+      badge: 'Empowerment',
+      title: 'Autonomía y responsabilidad',
+      instruction: 'Marcá las afirmaciones correctas respecto al empowerment.',
+      items: [
+        { text: 'El empowerment implica confiar y delegar.', color: 'green' },
+        { text: 'El empowerment implica abandonar al equipo.', color: 'red' },
+        { text: 'La autonomía favorece el compromiso.', color: 'green' }
+      ],
+      tutor: 'Pensá si empoderar es acompañar.',
+      explanation: 'Empoderar fortalece la participación y el compromiso.' // 
+    },
+    {
+      type: 'text',
+      badge: 'Trabajo en equipo',
+      title: 'Cooperación práctica',
+      instruction: 'Reconocé la importancia de la cooperación.',
+      validation: (raw) => {
+        if (!raw) return false;
+        const v = normalizar(raw);
+        let c = 0;
+        if (v.includes('equipo')) c++;
+        if (v.includes('cooperacion') || v.includes('cooperación')) c++;
+        if (v.includes('esfuerzo')) c++;
+        if (v.includes('objetivo') || v.includes('meta')) c++;
+        if (v.includes('juntos')) c++;
+        return c >= 2;
+      },
+      tutor: 'Pensá qué se logra trabajando juntos.',
+      explanation: 'La cooperación permite coordinar esfuerzos y alcanzar objetivos comunes con mayor eficacia.' // 
+    },
+    {
+      type: 'checklist',
+      badge: 'Trabajo en equipo',
+      title: 'Acciones cooperativas',
+      instruction: 'Seleccioná las acciones que favorecen el trabajo en equipo.',
+      items: [
+        { text: 'Apoyo entre integrantes', correct: true },
+        { text: 'Competencia interna constante', correct: false },
+        { text: 'Comunicación clara', correct: true },
+        { text: 'Objetivos compartidos', correct: true },
+        { text: 'Aislamiento del grupo', correct: false }
+      ],
+      tutor: 'Pensá qué acciones unen al grupo.',
+      explanation: 'La comunicación, el apoyo y los objetivos comunes fortalecen el equipo.' // 
+    }
+  ]
+};
+
+        let currentModule = '';
+        let currentIndex = 0;
+        let attemptCount = 0;
+        let lastAudioModule = null;
+
+        // ===== MAPEO DE MÓDULOS A AUDIOS =====
+        const moduloAudioMap = {
+            'sintesis': 'mensaje1',
+            'analisis': 'mensaje2',
+            'escenarios': 'mensaje3',
+            'practica': 'mensaje4'
+        };
+
+        function startModule(id) {
+            playSound('click');
+            currentModule = id;
+            currentIndex = 0;
+            attemptCount = 0;
+            lastAudioModule = id;
+
+            // Reproducir el audio del módulo correspondiente
+            const audioKey = moduloAudioMap[id];
+            if (audioKey) {
+                playAudio(audioKey);
+            }
+
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('activityScreen').classList.add('active');
+
+            setTimeout(loadActivity, 300);
+        }
+
+        function loadActivity() {
+            attemptCount = 0;
+
+            if (currentIndex >= modules[currentModule].length) {
+                // Reproducir "lolograste.mp3" al terminar TODAS las preguntas
+                playAudio('lolograste');
+                playSound('success');
+                alert('¡Excelente! Completaste este bloque.');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+                return;
+            }
+
+            const data = modules[currentModule][currentIndex];
+            const container = document.getElementById('activityContainer');
+
+            const msg = `Pregunta ${currentIndex + 1} de ${modules[currentModule].length}: ${data.tutor}`;
+            document.getElementById('tutorMessage').innerText = msg;
+
+            let html = `<span class="act-badge">${data.badge}</span>
+                        <h2 class="act-title">${data.title}</h2>
+                        <p class="act-instruction">${data.instruction}</p>`;
+
+            if (data.type === 'text') {
+                html += `<textarea id="txtInput" class="student-input" placeholder="Escribe tu respuesta con tus palabras..."></textarea>`;
+            } else if (data.type === 'blanks') {
+                html += `<div style="font-size:1.2rem; line-height:2.5;">`;
+                data.blanks.forEach((b, i) => {
+                    html += `${i + 1}. <input type="text" class="fill-input" data-ans="${b}"> <br>`;
+                });
+                html += `</div>`;
+            } else if (data.type === 'traffic') {
+                data.items.forEach((item, i) => {
+                    html += `<div class="traffic-row" id="row-${i}">
+                                <span>${item.text}</span>
+                                <div style="display:flex; gap:10px;">
+                                    <div class="traffic-btn bg-green" onclick="selTraffic(${i}, 'green')"></div>
+                                    <div class="traffic-btn bg-yellow" onclick="selTraffic(${i}, 'yellow')"></div>
+                                    <div class="traffic-btn bg-red" onclick="selTraffic(${i}, 'red')"></div>
+                                </div>
+                            </div>`;
+                });
+            } else if (data.type === 'checklist') {
+                data.items.forEach((item) => {
+                    html += `<div class="checklist-item" onclick="toggleCheck(this)" data-correct="${item.correct}">
+                                <div class="check-box"></div>
+                                <span>${item.text}</span>
+                            </div>`;
+                });
+            }
+
+            html += `<div id="feedback" class="feedback-area"></div>
+                     <button id="btnCheck" class="btn-action" onclick="validate()">Verificar respuesta</button>
+                     <button class="btn-action btn-back" onclick="location.reload()">Salir al menú</button>`;
+
+            container.innerHTML = html;
+            wireUiSounds();
+        }
+
+        let trafficAns = {};
+
+        function selTraffic(idx, color) {
+            trafficAns[idx] = color;
+            const row = document.getElementById(`row-${idx}`);
+            row.querySelectorAll('.traffic-btn').forEach(b => b.classList.remove('active'));
+            row.querySelector(`.bg-${color}`).classList.add('active');
+            playSound('click');
+        }
+
+        function toggleCheck(el) {
+            el.classList.toggle('selected');
+            el.querySelector('.check-box').innerText = el.classList.contains('selected') ? '✓' : '';
+
+            if (el.classList.contains('selected')) {
+                el.style.borderColor = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.background = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.borderColor = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.color = 'white';
+            } else {
+                el.style.borderColor = 'transparent';
+                el.querySelector('.check-box').style.background = 'transparent';
+                el.querySelector('.check-box').style.borderColor = '#ccc';
+            }
+
+            playSound('click');
+        }
+
+        function validate() {
+            const data = modules[currentModule][currentIndex];
+            const feedback = document.getElementById('feedback');
+            let isCorrect = false;
+
+            if (data.type === 'text') {
+                const val = document.getElementById('txtInput').value;
+                isCorrect = data.validation(val);
+            } else if (data.type === 'blanks') {
+                const inputs = document.querySelectorAll('.fill-input');
+                let hits = 0;
+                inputs.forEach(inp => {
+                    const v = normalizar(inp.value);
+                    const ans = normalizar(inp.dataset.ans);
+                    if (v.length > 1 && ans.startsWith(v.slice(0, Math.max(2, Math.min(v.length, ans.length))))) hits++;
+                });
+                isCorrect = (hits === data.blanks.length);
+            } else if (data.type === 'traffic') {
+                let hits = 0;
+                data.items.forEach((item, i) => { if (trafficAns[i] === item.color) hits++; });
+                isCorrect = (hits === data.items.length);
+            } else if (data.type === 'checklist') {
+                let correct = true;
+                document.querySelectorAll('.checklist-item').forEach(item => {
+                    const sel = item.classList.contains('selected');
+                    const should = item.dataset.correct === 'true';
+                    if (sel !== should) correct = false;
+                });
+                isCorrect = correct;
+            }
+
+            feedback.style.display = 'block';
+
+            if (isCorrect) {
+                playAudio('correcto');
+                playSound('success');
+                feedback.className = 'feedback-area feedback-success';
+                feedback.innerHTML = `<strong>¡Muy bien!</strong><br>${data.explanation}`;
+                document.getElementById('btnCheck').innerText = 'Siguiente pregunta →';
+                document.getElementById('btnCheck').onclick = () => { currentIndex++; loadActivity(); };
+            } else {
+                attemptCount++;
+
+                if (attemptCount < 2) {
+                    playAudio('error1');
+                    feedback.className = 'feedback-area feedback-retry';
+                    feedback.innerHTML = `<strong>Buen intento.</strong> Revisá tu respuesta. Pista: ${data.tutor}`;
+                } else {
+                    playAudio('error2');
+                    feedback.className = 'feedback-area feedback-fail';
+                    feedback.innerHTML = `<strong>No pasa nada, aprendamos juntos:</strong><br>${data.explanation}`;
+                    document.getElementById('btnCheck').innerText = 'Entendido, continuar →';
+                    document.getElementById('btnCheck').onclick = () => { currentIndex++; loadActivity(); };
+                }
+            }
+        }
+
+        function replayTutorMessage() {
+            // Replay del último audio de módulo reproducido
+            if (lastAudioModule) {
+                const audioKey = moduloAudioMap[lastAudioModule];
+                if (audioKey) {
+                    playAudio(audioKey);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
