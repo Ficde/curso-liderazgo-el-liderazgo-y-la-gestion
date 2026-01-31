@@ -363,7 +363,7 @@
                 <img src="logo.png" alt="FICDE" class="logo-img" onerror="this.style.display='none'; document.getElementById('altLogo').style.display='block'">
                 <h2 id="altLogo" style="display:none; color:white; font-weight:800;">FICDE</h2>
             </div>
-            <div class="module-tag">Módulo El liderazgo y la gestión</div>
+            <div class="module-tag">Módulo el liderazgo y la gestión</div>
         </header>
 
         <div id="selectionScreen">
@@ -379,25 +379,25 @@
                 <div class="block-card" onclick="startModule('sintesis')">
                     <div class="block-icon">🧠</div>
                     <div class="block-title">Síntesis</div>
-                    <div class="block-desc">Conceptos clave sobre liderazgo, delegación, comunicación interna, clima laboral, distribución de tareas y registro escrito en la gestión de equipos.</div>
+                    <div class="block-desc">Conceptos clave de liderazgo, ideas centrales sobre liderazgo, caracteristicas del lider, gestión del tiempo.</div>
                 </div>
 
                 <div class="block-card" onclick="startModule('analisis')">
                     <div class="block-icon">🔍</div>
                     <div class="block-title">Análisis Crítico</div>
-                    <div class="block-desc">Análisis de conflictos, decisiones unilaterales, desmotivación, responsabilidad compartida, necesidad de registro y acciones de mejora en la gestión del equipo.</div>
+                    <div class="block-desc">Análisis del rol del líder en los grupos, prácticas del liderazgo tradicional y lider coach.</div>
                 </div>
 
                 <div class="block-card" onclick="startModule('escenarios')">
                     <div class="block-icon">🎬</div>
                     <div class="block-title">Escenarios</div>
-                    <div class="block-desc">Situaciones prácticas de reuniones, conflictos, delegación de tareas, seguimiento de planes, actas, liderazgo autoritario y preventivo dentro del equipo.</div>
+                    <div class="block-desc">Situaciones de liderazgo en el equipo, tensión, situación de desorganización, dinámica cooperativa.</div>
                 </div>
 
                 <div class="block-card" onclick="startModule('practica')">
                     <div class="block-icon">⚡</div>
                     <div class="block-title">Práctica</div>
-                    <div class="block-desc">Ejercitación para registrar movimientos, analizar errores, cubrir vacantes, usar documentación válida y aplicar buenas prácticas de liderazgo y organización.</div>
+                    <div class="block-desc">Acciones prácticas del líder, Organización diaria, Cooperación práctica.</div>
                 </div>
             </div>
         </div>
@@ -499,683 +499,604 @@
                 .toLowerCase();
         }
 
-     // ACTIVIDADES – versión corregida (validaciones de texto flexibles)
+        // ===== ACTIVIDADES: validaciones de texto simplificadas ===
 const modules = {
 
-  // ============== SÍNTESIS ==============
-  sintesis: [
-    {
-      type: 'text',
-      badge: 'Liderazgo',
-      title: 'El liderazgo como proceso humano',
-      instruction: 'Leé el material de estudio y reconocé las ideas centrales sobre el liderazgo.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('liderazgo')) c++;
-        if (v.includes('proceso')) c++;
-        if (v.includes('influenc')) c++;
-        if (v.includes('objetivo')) c++;
-        if (v.includes('equipo') || v.includes('personas') || v.includes('grupo')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá el liderazgo más allá del cargo o la autoridad formal.',
-      explanation: 'El liderazgo es un proceso de influencia que se ejerce sobre las personas para orientar sus acciones hacia objetivos compartidos.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Liderazgo moderno',
-      title: 'El líder-coach',
-      instruction: 'Leé el material de estudio y reconocé las características del líder-coach.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('lider-coach') || v.includes('coach') || v.includes('coaching')) c++;
-        if (v.includes('desarrollo') || v.includes('potencial')) c++;
-        if (v.includes('confianza')) c++;
-        if (v.includes('aprendizaje')) c++;
-        if (v.includes('acompan') || v.includes('facilita')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá en un líder que acompaña en lugar de imponer.',
-      explanation: 'El líder-coach es aquel que incorpora herramientas del coaching a su estilo de liderazgo.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Liderazgo',
-      title: 'Características del líder-coach',
-      instruction: 'Seleccioná las afirmaciones que correspondan a las características del líder-coach.',
-      items: [
-        { text: 'Promueve el desarrollo del potencial de las personas', correct: true },
-        { text: 'Genera un clima de confianza', correct: true },
-        { text: 'Transfiere permanentemente su experiencia personal', correct: false },
-        { text: 'Favorece el aprendizaje autónomo', correct: true },
-        { text: 'Se centra solo en los errores del pasado', correct: false }
-      ],
-      tutor: 'Pensá si el líder acompaña el proceso o da respuestas cerradas.',
-      explanation: 'El líder-coach acompaña, confía y facilita el aprendizaje, evitando imponer soluciones propias.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Coaching',
-      title: 'El coaching como habilidad de liderazgo',
-      instruction: 'Leé el material de estudio y comprendé el rol del coaching en el liderazgo actual.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('coaching')) c++;
-        if (v.includes('desempeno') || v.includes('desempeño')) c++;
-        if (v.includes('liderazgo')) c++;
-        if (v.includes('herramienta')) c++;
-        if (v.includes('autoconocimiento')) c++;
-        if (v.includes('grupal') || v.includes('grupo')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá el coaching como una herramienta, no como una ideología.',
-      explanation: 'El coaching aplicado al liderazgo permite mejorar el desempeño individual y grupal a partir del autoconocimiento.' // 
-    },
-    {
-      type: 'blanks',
-      badge: 'Motivación',
-      title: 'Motivación y metas',
-      instruction:
-        'Completá las frases.<br>' +
-        'La motivación impulsa la ______ hacia un objetivo.<br>' +
-        'La motivación puede tener origen interno o ______.<br>' +
-        'El compromiso aumenta cuando las metas son ______.',
-      blanks: ['conducta', 'externo', 'claras'],
-      tutor: 'Pensá qué impulsa a actuar, de dónde surge y qué ayuda a sostener el esfuerzo.',
-      explanation: 'La motivación impulsa la conducta, puede originarse interna o externamente y se fortalece cuando las metas son claras.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Clima laboral',
-      title: 'Liderazgo y clima de trabajo',
-      instruction: 'Leé el material de estudio y reconocé la relación entre liderazgo y clima laboral.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('clima')) c++;
-        if (v.includes('laboral') || v.includes('trabajo')) c++;
-        if (v.includes('motivacion')) c++;
-        if (v.includes('liderazgo')) c++;
-        if (v.includes('confianza') || v.includes('positivo') || v.includes('ambiente')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá cómo se sienten las personas cuando el liderazgo es positivo.',
-      explanation: 'El liderazgo influye directamente en el clima laboral y puede generar un ambiente motivador que favorece el compromiso y la cooperación.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Gestión del equipo',
-      title: 'Prácticas que favorecen un buen clima',
-      instruction: 'Seleccioná las afirmaciones que correspondan a prácticas que favorecen un buen clima grupal.',
-      items: [
-        { text: 'Comunicación clara', correct: true },
-        { text: 'Reconocimiento del trabajo', correct: true },
-        { text: 'Control excesivo', correct: false },
-        { text: 'Apoyo entre integrantes', correct: true },
-        { text: 'Falta de participación', correct: false }
-      ],
-      tutor: 'Pensá qué prácticas generan confianza y bienestar.',
-      explanation: 'La comunicación, el reconocimiento y el apoyo fortalecen el clima grupal.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Gestión del tiempo',
-      title: 'El tiempo como recurso',
-      instruction: 'Comprendé la importancia de la gestión del tiempo.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('tiempo')) c++;
-        if (v.includes('recurso')) c++;
-        if (v.includes('prioridad')) c++;
-        if (v.includes('planific') || v.includes('organizar')) c++;
-        if (v.includes('objetivo')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá si hacer más siempre significa avanzar mejor.',
-      explanation: 'El tiempo es un recurso limitado e irremplazable que debe gestionarse de manera consciente.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Gestión del tiempo',
-      title: 'Uso eficaz del tiempo',
-      instruction: 'Marcá las afirmaciones correctas respecto a la gestión del tiempo.',
-      items: [
-        { text: 'Gestionar el tiempo implica hacer más tareas en menos tiempo.', color: 'red' },
-        { text: 'No todo lo urgente es necesariamente importante.', color: 'green' },
-        { text: 'Administrar el tiempo requiere definir prioridades y objetivos.', color: 'green' }
-      ],
-      tutor: 'Pensá si estar ocupado siempre significa ser productivo.',
-      explanation: 'Gestionar el tiempo implica priorizar lo importante, no solo lo urgente.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Empowerment',
-      title: 'Empoderamiento y trabajo en equipo',
-      instruction: 'Reconocé el sentido del empowerment en los equipos.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('empowerment') || v.includes('empoderamiento')) c++;
-        if (v.includes('responsabil')) c++;
-        if (v.includes('compromiso')) c++;
-        if (v.includes('equipo') || v.includes('trabajo en equipo')) c++;
-        if (v.includes('autonomia') || v.includes('autonomía')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué pasa cuando se delega poder y responsabilidad en el equipo.',
-      explanation: 'El empowerment consiste en delegar poder y responsabilidad, permitiendo que las personas participen activamente en las decisiones y se comprometan con los resultados.' // 
-    }
-  ],
+    // ===================== SÍNTESIS =====================
+    sintesis: [
+        {
+            type: 'text',
+            badge: 'Liderazgo',
+            title: 'El liderazgo como proceso humano',
+            instruction: 'Leé el material de estudio y reconocé las ideas centrales sobre el liderazgo.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                let c = 0;
+                if (v.includes('liderazgo') || v.includes('proces')) c++;
+                if (v.includes('influencia') || v.includes('ejerc')) c++;
+                if (v.includes('personas') || v.includes('orient') || v.includes('comparti')) c++;
+                return c >= 2;
+            },
+            tutor: 'Pensá el liderazgo más allá del cargo o la autoridad formal.',
+            explanation: 'El liderazgo es un proceso de influencia que se ejerce sobre las personas para orientar sus acciones hacia objetivos compartidos. '
+        },
+        {
+            type: 'text',
+            badge: 'Liderazgo moderno',
+            title: 'El líder-coach',
+            instruction: 'Leé el material de estudio y reconocé las características del líder-coach.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                let c = 0;
+                if (v.includes('coach')) c++;
+                if (v.includes('lider') || v.includes('incorpor')) c++;
+                if (v.includes('estil') || v.includes('aprendizaj') || v.includes('herramientas')) c++;
+                return c >= 2;
+            },
+            tutor: 'Pensá en un líder que acompaña en lugar de imponer.',
+            explanation: 'El líder-coach es aquel que incorpora herramientas del coaching a su estilo de liderazgo.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Liderazgo',
+            title: 'Características del líder-coach',
+            instruction: 'Seleccioná las afirmaciones que correspondan a las características del líder-coach.',
+            items: [
+                { text: 'Promueve el desarrollo del potencial de las personas', correct: true },
+                { text: 'Genera un clima de confianza', correct: true },
+                { text: 'Transfiere permanentemente su experiencia personal', correct: false },
+                { text: 'Favorece el aprendizaje autónomo', correct: true },
+                { text: 'Se centra solo en los errores del pasado', correct: false }
+            ],
+            tutor: 'Pensá si el líder acompaña el proceso o da respuestas cerradas.',
+            explanation: 'El líder-coach acompaña, confía y facilita el aprendizaje, evitando imponer soluciones propias.'
+        },
+        {
+            type: 'text',
+            badge: 'Coaching',
+            title: 'El coaching como habilidad de liderazgo',
+            instruction: 'Leé el material de estudio y comprendé el rol del coaching en el liderazgo actual.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                let c = 0;
+                if (v.includes('coaching') || v.includes('desempeño')) c++;
+                if (v.includes('liderazgo') || v.includes('herramienta')) c++;
+                if (v.includes('autoconocimiento') || v.includes('capacid') || v.includes('grupal') || v.includes('area')) c++;
+                return c >= 2;
+            },
+            tutor: 'Pensá el coaching como una herramienta, no como una ideología.',
+            explanation: 'El coaching aplicado al liderazgo permite mejorar el desempeño individual y grupal a partir del autoconocimiento. El líder-coach actúa como facilitador del proceso de reflexión, ayudando a que las personas descubran sus propias capacidades y áreas de mejora.'
+        },
+        {
+            type: 'blanks',
+            badge: 'Motivación',
+            title: 'Motivación y metas',
+            instruction: 'Completá las frases.<br>La motivación impulsa la ______ hacia un objetivo<br>La motivación puede tener origen interno o ______<br>El compromiso aumenta cuando las metas son ______',
+            blanks: ['conducta', 'extern', 'claras'],
+            tutor: 'Pensá qué impulsa a actuar, de dónde surge y qué ayuda a sostener el esfuerzo.',
+            explanation: 'La motivación impulsa la conducta, puede originarse interna o externamente y se fortalece cuando las metas son claras.'
+        },
+        {
+            type: 'text',
+            badge: 'Clima laboral',
+            title: 'Liderazgo y clima de trabajo',
+            instruction: 'Leé el material de estudio y reconocé la relación entre liderazgo y clima laboral.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('clima') || v.includes('esfuerz')) &&
+                    (v.includes('liderazgo') || v.includes('comunica') || v.includes('equip') || v.includes('influye'))
+                );
+            },
+            tutor: 'Pensá cómo se sienten las personas cuando el liderazgo es positivo.',
+explanation: 'El liderazgo influye directamente en el clima laboral. Un líder que escucha, comunica con claridad y reconoce el esfuerzo genera un ambiente motivador que favorece el compromiso, la cooperación y el desempeño del equipo.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Gestión del equipo',
+            title: 'Prácticas que favorecen un buen clima',
+            instruction: 'Seleccioná las afirmaciones que correspondan a prácticas que favorecen un buen clima grupal.',
+            items: [
+                { text: 'Comunicación clara', correct: true },
+                { text: 'Reconocimiento del trabajo', correct: true },
+                { text: 'Control excesivo', correct: false },
+                { text: 'Apoyo entre integrantes', correct: true },
+                { text: 'Falta de participación', correct: false }
+            ],
+            tutor: 'Pensá qué prácticas generan confianza y bienestar.',
+            explanation: 'La comunicación, el reconocimiento y el apoyo fortalecen el clima grupal.'
+        },
+        {
+            type: 'text',
+            badge: 'Gestión del tiempo',
+            title: 'El tiempo como recurso',
+            instruction: 'Comprendé la importancia de la gestión del tiempo.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                let c = 0;
+                if (v.includes('tiempo') || v.includes('recurs') || v.includes('limit')) c++;
+                if (v.includes('irreemplaza') || v.includes('gestion') || v.includes('conscient') || v.includes('maner')) c++;
+                return c >= 2;
+            },
+            tutor: 'Pensá si hacer más siempre significa avanzar mejor.',
+            explanation: 'El tiempo es un recurso limitado e irremplazable que debe gestionarse de manera consciente.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Gestión del tiempo',
+            title: 'Uso eficaz del tiempo',
+            instruction: 'Marca las afirmaciones correctas respecto a la gestión del tiempo.',
+            items: [
+                { text: 'Gestionar el tiempo implica hacer más tareas en menos tiempo.', color: 'red' },
+                { text: 'No todo lo urgente es necesariamente importante.', color: 'green' },
+                { text: 'Administrar el tiempo requiere definir prioridades y objetivos.', color: 'green' }
+            ],
+            tutor: 'Pensá si estar ocupado siempre significa ser productivo.',
+            explanation: 'Gestionar el tiempo implica priorizar lo importante, no solo lo urgente.'
+        },
+        {
+            type: 'text',
+            badge: 'Empowerment',
+            title: 'Empoderamiento y trabajo en equipo',
+            instruction: 'Reconocé el sentido del empowerment en los equipos.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('empowerment') || v.includes('responsabilidad')) &&
+                    (v.includes('decision') || v.includes('equip') || v.includes('result'))
+                );
+            },
+            tutor: 'Pensá qué pasa cuando el cuerpo contradice a las palabras.',
+            explanation: 'El empowerment consiste en delegar poder y responsabilidad, permitiendo que las personas participen activamente en las decisiones y se comprometan con los resultados. Este enfoque fortalece el trabajo en equipo, la motivación y la mejora continua.'
+        }
+    ],
 
-  // ============== ANÁLISIS ==============
-  analisis: [
-    {
-      type: 'text',
-      badge: 'Liderazgo',
-      title: 'Análisis del rol del líder en los grupos',
-      instruction: 'Analizá el rol del líder en los grupos.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('lider') || v.includes('liderazgo')) c++;
-        if (v.includes('responsabil')) c++;
-        if (v.includes('influenc')) c++;
-        if (v.includes('grupo') || v.includes('dinamica')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá cómo las decisiones del líder impactan en el grupo.',
-      explanation: 'El líder cumple un rol central en la dinámica del grupo, influyendo en la motivación, el clima y el compromiso.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Liderazgo moderno',
-      title: 'Análisis del enfoque líder-coach',
-      instruction: 'Reflexioná sobre el enfoque del líder-coach.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('lider-coach') || v.includes('coach') || v.includes('coaching')) c++;
-        if (v.includes('acompan') || v.includes('acompaña')) c++;
-        if (v.includes('desarrollo')) c++;
-        if (v.includes('aprendizaje')) c++;
-        if (v.includes('facilita') || v.includes('facilitador')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá si el líder enseña o facilita el aprendizaje.',
-      explanation: 'El enfoque del líder-coach se basa en acompañar a las personas en su proceso de desarrollo.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Liderazgo',
-      title: 'Prácticas del liderazgo tradicional y del líder-coach',
-      instruction: 'Seleccioná las afirmaciones que correspondan al enfoque del líder-coach.',
-      items: [
-        { text: 'Promueve la reflexión', correct: true },
-        { text: 'Centraliza todas las decisiones', correct: false },
-        { text: 'Se apoya en la confianza', correct: true },
-        { text: 'Evita la participación del equipo', correct: false },
-        { text: 'Facilita el autoconocimiento', correct: true }
-      ],
-      tutor: 'Pensá si el liderazgo habilita o limita la participación.',
-      explanation: 'El líder-coach fomenta la reflexión, la confianza y el desarrollo personal.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Motivación',
-      title: 'Motivación y desempeño grupal',
-      instruction: 'Analizá la relación entre motivación y desempeño.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('motivacion')) c++;
-        if (v.includes('compromiso')) c++;
-        if (v.includes('desempeno') || v.includes('desempeño')) c++;
-        if (v.includes('esfuerzo')) c++;
-        if (v.includes('responsabil')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué ocurre cuando la motivación disminuye.',
-      explanation: 'La motivación influye directamente en el desempeño de los grupos.' // 
-    },
-    {
-      type: 'blanks',
-      badge: 'Gestión del tiempo',
-      title: 'Uso consciente del tiempo',
-      instruction:
-        'Completá las frases.<br>' +
-        'El tiempo es un recurso que no se puede ______.<br>' +
-        'Gestionar el tiempo implica establecer ______.<br>' +
-        'No todo lo urgente es ______.',
-      blanks: ['recuperar', 'prioridades', 'importante'],
-      tutor: 'Pensá en el valor del tiempo y en cómo se toman decisiones diarias.',
-      explanation: 'El tiempo es irreemplazable; gestionarlo implica priorizar lo importante sobre lo urgente.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Gestión del tiempo',
-      title: 'Análisis crítico del uso del tiempo',
-      instruction: 'Reflexioná sobre el uso cotidiano del tiempo.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('tiempo')) c++;
-        if (v.includes('prioridad')) c++;
-        if (v.includes('planific') || v.includes('organizar')) c++;
-        if (v.includes('resultado') || v.includes('objetivo')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá si estar ocupado siempre genera resultados.',
-      explanation: 'Hacer muchas tareas no garantiza mejores resultados si no están alineadas con los objetivos prioritarios.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Gestión del tiempo',
-      title: 'Prácticas que mejoran el uso del tiempo',
-      instruction: 'Seleccioná las afirmaciones que correspondan a prácticas adecuadas de gestión del tiempo.',
-      items: [
-        { text: 'Definir prioridades', correct: true },
-        { text: 'Evitar toda planificación', correct: false },
-        { text: 'Hacer varias tareas al mismo tiempo', correct: false },
-        { text: 'Delegar tareas cuando es posible', correct: true },
-        { text: 'Establecer objetivos claros', correct: true }
-      ],
-      tutor: 'Pensá qué acciones ayudan a organizar mejor el día.',
-      explanation: 'Priorizar, delegar y definir objetivos mejora el uso del tiempo.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Empowerment',
-      title: 'Análisis del empoderamiento en los equipos',
-      instruction: 'Analizá el impacto del empowerment en los grupos.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('empowerment') || v.includes('empoderamiento')) c++;
-        if (v.includes('compromiso')) c++;
-        if (v.includes('responsabil')) c++;
-        if (v.includes('equipo')) c++;
-        if (v.includes('participac') || v.includes('involucr')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué sucede cuando las personas asumen mayor responsabilidad.',
-      explanation: 'El empowerment fortalece el compromiso y la participación al otorgar responsabilidad y autonomía.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Empowerment',
-      title: 'Responsabilidad y poder en los equipos',
-      instruction: 'Marcá las afirmaciones correctas respecto al empowerment.',
-      items: [
-        { text: 'El empowerment implica delegar poder y responsabilidad.', color: 'green' },
-        { text: 'El empowerment elimina toda forma de liderazgo.', color: 'red' },
-        { text: 'El empowerment favorece el compromiso del equipo.', color: 'green' }
-      ],
-      tutor: 'Pensá si empoderar es abandonar o acompañar.',
-      explanation: 'El empowerment fortalece el compromiso al combinar autonomía con acompañamiento.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Liderazgo y valores',
-      title: 'Análisis del liderazgo ético',
-      instruction: 'Reflexioná sobre la importancia de los valores en el liderazgo.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('valores')) c++;
-        if (v.includes('etica') || v.includes('etico') || v.includes('ético')) c++;
-        if (v.includes('liderazgo') || v.includes('lider')) c++;
-        if (v.includes('confianza') || v.includes('legitimi') || v.includes('coherenc')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué pasa cuando el liderazgo pierde valores.',
-      explanation: 'El liderazgo basado en valores orienta las decisiones hacia el bien común y fortalece la confianza del grupo.' // 
-    }
-  ],
+    // ===================== ANÁLISIS =====================
+    analisis: [
+        {
+            type: 'text',
+            badge: 'Liderazgo',
+            title: 'Análisis del rol del líder en los grupos.',
+            instruction: 'Análisis del rol del líder en los grupos',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('lider') || v.includes('cumple')) &&
+                    (v.includes('rol') || v.includes('accion') || v.includes('integrant') || v.includes('comprom') || v.includes('dinamica'))
+                );
+            },
+            tutor: 'Pensá cómo las decisiones del líder impactan en el grupo.',
+            explanation: 'El líder cumple un rol central en la dinámica del grupo, ya que sus acciones influyen en la motivación, el clima y el compromiso de los integrantes.'
+        },
+        {
+            type: 'text',
+            badge: 'Liderazgo moderno',
+            title: 'Análisis del enfoque líder-coach',
+            instruction: 'Reflexioná sobre el enfoque del líder-coach.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('líder-coach') || v.includes('acompa') || v.includes('desarrollo')) &&
+                    v.includes('person') &&
+                    (v.includes('basa') || v.includes('personas') || v.includes('proceso'))
+                );
+            },
+            tutor: 'Pensá si el líder enseña o facilita el aprendizaje.',
+            explanation: 'El enfoque del líder-coach se basa en acompañar a las personas en su proceso de desarrollo.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Liderazgo',
+            title: 'Prácticas del liderazgo tradicional y del líder-coach',
+            instruction: 'Seleccioná las afirmaciones que correspondan al enfoque del líder-coach.',
+            items: [
+                { text: 'Promueve la reflexión', correct: true },
+                { text: 'Centraliza todas las decisiones', correct: false },
+                { text: 'Se apoya en la confianza', correct: true },
+                { text: 'Evita la participación del equipo', correct: false },
+                { text: 'Facilita el autoconocimiento', correct: true }
+            ],
+            tutor: 'Pensá si el liderazgo habilita o limita la participación.',
+            explanation: 'El líder-coach fomenta la reflexión, la confianza y el desarrollo personal.'
+        },
+        {
+            type: 'text',
+            badge: 'Motivación',
+            title: 'Motivación y desempeño grupal',
+            instruction: 'Analizá la relación entre motivación y desempeño.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('motivacion') || v.includes('compromiso')) &&
+                    (v.includes('desempe') || v.includes('liderazgo')) &&
+                    (v.includes('reconoce') || v.includes('esfuerzo') || v.includes('responsabilidades'))
+                );
+            },
+            tutor: 'Pensá qué ocurre cuando la motivación disminuye.',
+            explanation: 'La motivación influye directamente en el desempeño de los grupos. Un liderazgo que reconoce el esfuerzo, asigna responsabilidades y brinda sentido a las tareas favorece el compromiso y mejora los resultados colectivos.'
+        },
+        {
+            type: 'blanks',
+            badge: 'Gestión del tiempo',
+            title: 'Uso consciente del tiempo',
+            instruction: 'Completá las frases.<br>El tiempo es un recurso que no se puede ______<br>Gestionar el tiempo implica establecer ______<br>No todo lo urgente es ______',
+            blanks: ['recuperar', 'prioridades', 'importante'],
+            tutor: 'Pensá en el valor del tiempo y en cómo se toman decisiones diarias.',
+            explanation: 'El tiempo es irreemplazable, por eso gestionarlo implica priorizar lo importante sobre lo urgente.'
+        },
+        {
+            type: 'text',
+            badge: 'Gestión del tiempo',
+            title: 'Análisis crítico del uso del tiempo',
+            instruction: 'Reflexioná sobre el uso cotidiano del tiempo.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('tiempo') || v.includes('activid')) &&
+                    (v.includes('tare') || v.includes('garanti') || v.includes('genera') || v.includes('resultados') || v.includes('priori'))
+                );
+            },
+            tutor: 'Pensá si estar ocupado siempre genera resultados.',
+            explanation: 'El uso del tiempo requiere una mirada crítica sobre las actividades diarias. Hacer muchas tareas no garantiza mejores resultados si estas no están alineadas con los objetivos prioritarios.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Gestión del tiempo',
+            title: 'Prácticas que mejoran el uso del tiempo',
+            instruction: 'Seleccioná las afirmaciones que correspondan a prácticas adecuadas de gestión del tiempo.',
+            items: [
+                { text: 'Definir prioridades', correct: true },
+                { text: 'Evitar toda planificación', correct: false },
+                { text: 'Hacer varias tareas al mismo tiempo', correct: false },
+                { text: 'Delegar tareas cuando es posible', correct: true },
+                { text: 'Establecer objetivos claros', correct: true }
+            ],
+            tutor: 'Pensá qué acciones ayudan a organizar mejor el día.',
+            explanation: 'Priorizar, delegar y definir objetivos mejora el uso del tiempo.'
+        },
+        {
+            type: 'text',
+            badge: 'Empowerment',
+            title: 'Análisis del empoderamiento en los equipos',
+            instruction: 'Analizá el impacto del empowerment en los grupos.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('empowerment') || v.includes('compromiso') || v.includes('otorgar')) &&
+                    (v.includes('responsabilidad') || v.includes('autono') || v.includes('participación') || v.includes('involucrados'))
+                );
+            },
+            tutor: 'Pensá qué sucede cuando las personas asumen mayor responsabilidad.',
+            explanation: 'El empowerment fortalece el compromiso y la participación al otorgar responsabilidad y autonomía. Este enfoque favorece equipos más involucrados, creativos y orientados a la mejora continua.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Empowerment',
+            title: 'Responsabilidad y poder en los equipos',
+            instruction: 'Marca las afirmaciones correctas respecto al empowerment.',
+            items: [
+                { text: 'El empowerment implica delegar poder y responsabilidad.', color: 'green' },
+                { text: 'El empowerment elimina toda forma de liderazgo.', color: 'red' },
+                { text: 'El empowerment favorece el compromiso del equipo.', color: 'green' }
+            ],
+            tutor: 'Pensá si empoderar es abandonar o acompañar.',
+            explanation: 'El empowerment fortalece el compromiso al combinar autonomía con acompañamiento.'
+        },
+        {
+            type: 'text',
+            badge: 'Liderazgo y valores',
+            title: 'Análisis del liderazgo ético',
+            instruction: 'Reflexioná sobre la importancia de los valores en el liderazgo.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('valores') || v.includes('liderazgo')) &&
+                    (v.includes('etic') || v.includes('coheren') || v.includes('decisiones '))
+                );
+            },
+            tutor: 'Pensá qué pasa cuando el liderazgo pierde valores.',
+            explanation: 'El liderazgo basado en valores orienta las decisiones hacia el bien común y fortalece la confianza del grupo. Sin una base ética, el liderazgo pierde legitimidad y coherencia.'
+        }
+    ],
 
-  // ============== ESCENARIOS ==============
-  escenarios: [
-    {
-      type: 'text',
-      badge: 'Liderazgo',
-      title: 'Situación de liderazgo en el equipo',
-      instruction: 'Analizá el rol del líder y la escucha activa.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('lider')) c++;
-        if (v.includes('escucha')) c++;
-        if (v.includes('equipo') || v.includes('grupo')) c++;
-        if (v.includes('objetivo') || v.includes('compromiso')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué cambia cuando el líder escucha.',
-      explanation: 'La escucha activa permite fortalecer el compromiso y orientar al grupo hacia objetivos compartidos.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Liderazgo',
-      title: 'Conductas del líder en la situación',
-      instruction: 'Marcá las afirmaciones correctas respecto a la conducta del líder.',
-      items: [
-        { text: 'Escuchar al equipo favorece el compromiso grupal.', color: 'green' },
-        { text: 'Ignorar las opiniones mejora el desempeño.', color: 'red' },
-        { text: 'Definir objetivos compartidos fortalece al grupo.', color: 'green' }
-      ],
-      tutor: 'Pensá qué conductas acercan al grupo.',
-      explanation: 'La escucha y los objetivos comunes fortalecen al equipo.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Motivación',
-      title: 'Análisis de la motivación en el grupo',
-      instruction: 'Reflexioná sobre la motivación.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('motivacion')) c++;
-        if (v.includes('objetivo') || v.includes('sentido')) c++;
-        if (v.includes('equipo') || v.includes('grupo')) c++;
-        if (v.includes('escucha') || v.includes('redefinir')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué impacto tiene el sentido de las tareas.',
-      explanation: 'Cuando las tareas tienen sentido, la motivación aumenta.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Motivación',
-      title: 'Factores presentes en la situación',
-      instruction: 'Seleccioná los factores que favorecen la motivación del grupo.',
-      items: [
-        { text: 'Escucha activa', correct: true },
-        { text: 'Objetivos claros', correct: true },
-        { text: 'Participación', correct: true },
-        { text: 'Falta de reconocimiento', correct: false },
-        { text: 'Control excesivo', correct: false }
-      ],
-      tutor: 'Pensá qué acciones impulsan al grupo.',
-      explanation: 'La motivación crece con participación y objetivos claros.' //
-    },
-    {
-      type: 'text',
-      badge: 'Gestión del tiempo',
-      title: 'Situación de desorganización',
-      instruction: 'Analizá qué se ve afectado por la falta de prioridades.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('tiempo')) c++;
-        if (v.includes('prioridad')) c++;
-        if (v.includes('resultado') || v.includes('plazo')) c++;
-        if (v.includes('sobrecarga') || v.includes('muchas tareas')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá si el problema es la cantidad o el uso del tiempo.',
-      explanation: 'La falta de prioridades afecta los resultados.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Gestión del tiempo',
-      title: 'Análisis de conductas',
-      instruction: 'Marcá las afirmaciones correctas respecto a la gestión del tiempo.',
-      items: [
-        { text: 'Trabajar más horas garantiza mejores resultados.', color: 'red' },
-        { text: 'Definir prioridades mejora la eficiencia.', color: 'green' },
-        { text: 'No todo lo urgente es importante.', color: 'green' }
-      ],
-      tutor: 'Pensá en qué enfocás tu energía.',
-      explanation: 'Priorizar mejora el uso del tiempo.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Empowerment',
-      title: 'Situación de delegación',
-      instruction: 'Analizá el enfoque del líder.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let puntos = 0;
-        if (v.includes('delegacion') || v.includes('delega')) puntos++;
-        if (v.includes('lider')) puntos++;
-        if (v.includes('equipo')) puntos++;
-        if (v.includes('responsabil')) puntos++;
-        if (v.includes('compromiso')) puntos++;
-        if (v.includes('confia') || v.includes('confianza')) puntos++;
-        return puntos >= 2;
-      },
-      tutor: 'Pensá qué ocurre cuando se confía en el equipo y se comparten responsabilidades.',
-      explanation: 'La delegación fortalece el compromiso del equipo y la confianza en el líder.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Empowerment',
-      title: 'Efectos en el equipo',
-      instruction: 'Seleccioná las afirmaciones que reflejan efectos del empowerment.',
-      items: [
-        { text: 'Mayor compromiso', correct: true },
-        { text: 'Pasividad del equipo', correct: false },
-        { text: 'Inquietud creativa', correct: true },
-        { text: 'Desinterés', correct: false },
-        { text: 'Responsabilidad', correct: true }
-      ],
-      tutor: 'Pensá qué cambia cuando hay autonomía.',
-      explanation: 'El empowerment aumenta compromiso y responsabilidad.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Trabajo en equipo',
-      title: 'Situación de cooperación',
-      instruction: 'Analizá la dinámica grupal.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('cooperacion') || v.includes('cooperación')) c++;
-        if (v.includes('colabora') || v.includes('colaboracion')) c++;
-        if (v.includes('objetivo') || v.includes('meta')) c++;
-        if (v.includes('juntos') || v.includes('equipo')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué permite lograr más juntos.',
-      explanation: 'La cooperación potencia los resultados grupales.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Trabajo en equipo',
-      title: 'Dinámica cooperativa',
-      instruction: 'Marcá las afirmaciones correctas respecto al trabajo en equipo.',
-      items: [
-        { text: 'La cooperación mejora el logro de objetivos.', color: 'green' },
-        { text: 'El trabajo en equipo elimina responsabilidades individuales.', color: 'red' },
-        { text: 'La coordinación favorece la sinergia.', color: 'green' }
-      ],
-      tutor: 'Pensá qué se logra trabajando juntos.',
-      explanation: 'La cooperación genera mejores resultados.' // 
-    }
-  ],
+    // ===================== ESCENARIOS =====================
+    escenarios: [
+        {
+            type: 'text',
+            badge: 'Liderazgo',
+            title: 'Situación de liderazgo en el equipo',
+            instruction: 'Analizá el rol del líder y La escucha activa',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    v.includes('escu') ||
+                    (
+                        (v.includes('activ') || v.includes('compromiso') || v.includes('permit')) &&
+                        (v.includes('orient') || v.includes('grup') || v.includes('objet')) &&
+                        (v.includes('fortale') || v.includes('escucha') || v.includes('comunes') || v.includes('comparti'))
+                    )
+                );
+            },
+            tutor: 'Pensá qué cambia cuando el líder escucha.',
+            explanation: 'La escucha activa permite fortalecer el compromiso y orientar al grupo hacia objetivos compartidos.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Liderazgo',
+            title: 'Conductas del líder en la situación',
+            instruction: 'Marca las afirmaciones correctas respecto a la conducta del líder.',
+            items: [
+                { text: 'Escuchar al equipo favorece el compromiso grupal.', color: 'green' },
+                { text: 'Ignorar las opiniones mejora el desempeño.', color: 'red' },
+                { text: 'Definir objetivos compartidos fortalece al grupo.', color: 'green' }
+            ],
+            tutor: 'Pensá qué conductas acercan al grupo.',
+            explanation: 'La escucha y los objetivos comunes fortalecen al equipo.'
+        },
+        {
+            type: 'text',
+            badge: 'Motivación',
+            title: 'Análisis de la motivación en el grupo',
+            instruction: 'Reflexioná sobre la motivación.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('tare') || v.includes('sentid')) &&
+                    (v.includes('motivac') || v.includes('aument') || v.includes('equip'))
+                );
+            },
+            tutor: 'Pensá qué impacto tiene el sentido de las tareas.',
+            explanation: 'Cuando las tareas tienen sentido, la motivación aumenta.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Motivación',
+            title: 'Factores presentes en la situación',
+            instruction: 'Seleccioná los factores que favorecen la motivación del grupo.',
+            items: [
+                { text: 'Escucha activa', correct: true },
+                { text: 'Objetivos claros', correct: true },
+                { text: 'Participación', correct: true },
+                { text: 'Falta de reconocimiento', correct: false },
+                { text: 'Control excesivo', correct: false }
+            ],
+            tutor: 'Pensá qué acciones impulsan al grupo.',
+            explanation: 'La motivación crece con participación y objetivos claros.'
+        },
+        {
+            type: 'text',
+            badge: 'Gestión del tiempo',
+            title: 'Situación de desorganización',
+            instruction: 'Analizá que se ven afectados por  la falta de prioridades',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('priori') || v.includes('falt') || v.includes('afect')) &&
+                    (v.includes('result') || v.includes('cantid') || v.includes('tiemp'))
+                );
+            },
+            tutor: 'Pensá si el problema es la cantidad o el uso del tiempo.',
+            explanation: 'La falta de prioridades afecta los resultados.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Gestión del tiempo',
+            title: 'Análisis de conductas',
+            instruction: 'Marca las afirmaciones correctas respecto a la gestión del tiempo.',
+            items: [
+                { text: 'Trabajar más horas garantiza mejores resultados.', color: 'red' },
+                { text: 'Definir prioridades mejora la eficiencia.', color: 'green' },
+                { text: 'No todo lo urgente es importante.', color: 'green' }
+            ],
+            tutor: 'Pensá en qué enfocás tu energía.',
+            explanation: 'Priorizar mejora el uso del tiempo.'
+        },
+        {
+            type: 'text',
+            badge: 'Empowerment',
+            title: 'Situación de delegación',
+            instruction: 'Analizá el enfoque del líder.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('fortale') || v.includes('compromis')) &&
+                    (v.includes('delega') || v.includes('respo') || v.includes('equipo') || v.includes('confía'))
+                );
+            },
+            tutor: 'Pensá qué ocurre cuando se confía en el equipo.',
+            explanation: 'La delegación fortalece el compromiso.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Empowerment',
+            title: 'Efectos en el equipo',
+            instruction: 'Seleccioná las afirmaciones que reflejan efectos del empowerment.',
+            items: [
+                { text: 'Mayor compromiso', correct: true },
+                { text: 'Pasividad del equipo', correct: false },
+                { text: 'Inquietud', correct: true },
+                { text: 'Desinterés', correct: false },
+                { text: 'Responsabilidad', correct: true }
+            ],
+            tutor: 'Pensá qué cambia cuando hay autonomía.',
+            explanation: 'El empowerment aumenta compromiso y responsabilidad.'
+        },
+        {
+            type: 'text',
+            badge: 'Trabajo en equipo',
+            title: 'Situación de cooperación',
+            instruction: 'Analizá la dinámica grupal.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('coopera') || v.includes('potenc')) &&
+                    (v.includes('result') || v.includes('objetiv ') || v.includes('grup')) &&
+                    (v.includes('juntos') || v.includes('coordina') || v.includes('logra'))
+                );
+            },
+            tutor: 'Pensá qué permite lograr más juntos.',
+            explanation: 'La cooperación potencia los resultados grupales.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Trabajo en equipo',
+            title: 'Dinámica cooperativa',
+            instruction: 'Marca las afirmaciones correctas respecto al trabajo en equipo.',
+            items: [
+                { text: 'La cooperación mejora el logro de objetivos.', color: 'green' },
+                { text: 'El trabajo en equipo elimina responsabilidades individuales.', color: 'red' },
+                { text: 'La coordinación favorece la sinergia.', color: 'green' }
+            ],
+            tutor: 'Pensá qué se logra trabajando juntos.',
+            explanation: 'La cooperación genera mejores resultados'
+        }
+    ],
 
-  // ============== PRÁCTICA ==============
-  practica: [
-    {
-      type: 'checklist',
-      badge: 'Liderazgo',
-      title: 'Acciones prácticas del líder',
-      instruction: 'Seleccioná las acciones propias de un liderazgo efectivo.',
-      items: [
-        { text: 'Comunicación clara', correct: true },
-        { text: 'Reconocimiento del esfuerzo', correct: true },
-        { text: 'Escucha activa', correct: true },
-        { text: 'Desinterés por el equipo', correct: false },
-        { text: 'Imposición constante', correct: false }
-      ],
-      tutor: 'Pensá qué acciones fortalecen el vínculo con el equipo.',
-      explanation: 'La escucha, la comunicación y el reconocimiento fortalecen el liderazgo.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Motivación',
-      title: 'Aplicación práctica de la motivación',
-      instruction: 'Reconocé cómo se motiva a un equipo.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('motivacion')) c++;
-        if (v.includes('tarea') || v.includes('sentido')) c++;
-        if (v.includes('participacion')) c++;
-        if (v.includes('reconoc')) c++;
-        if (v.includes('compromiso')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué hace que una tarea valga la pena.',
-      explanation: 'La motivación aumenta cuando las tareas tienen sentido, se reconocen los esfuerzos y se promueve la participación.' //
-    },
-    {
-      type: 'blanks',
-      badge: 'Gestión del equipo',
-      title: 'Compromiso grupal',
-      instruction:
-        'Completá las frases.<br>' +
-        'El compromiso aumenta cuando se asignan ______.<br>' +
-        'La participación se fortalece con clara ______.<br>' +
-        'La confianza se construye con ______.',
-      blanks: ['responsabilidades', 'comunicacion', 'coherencia'],
-      tutor: 'Pensá en qué condiciones te sentís más involucrado.',
-      explanation: 'Responsabilidades, comunicación y coherencia fortalecen el compromiso.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Motivación',
-      title: 'Prácticas motivadoras',
-      instruction: 'Marcá las afirmaciones correctas respecto a la motivación grupal.',
-      items: [
-        { text: 'Asignar responsabilidades favorece la motivación.', color: 'green' },
-        { text: 'Reconocer el esfuerzo mejora el compromiso.', color: 'green' },
-        { text: 'Ignorar los aportes del equipo motiva.', color: 'red' }
-      ],
-      tutor: 'Pensá qué acciones impulsan a participar.',
-      explanation: 'La motivación crece con responsabilidad y reconocimiento.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Gestión del tiempo',
-      title: 'Organización diaria',
-      instruction: 'Analizá qué implica organizar el tiempo.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('tiempo')) c++;
-        if (v.includes('planific') || v.includes('organizar')) c++;
-        if (v.includes('tarea') || v.includes('actividad')) c++;
-        if (v.includes('prioridad')) c++;
-        if (v.includes('importante')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá si todo lo que hacés es igual de importante.',
-      explanation: 'Organizar el tiempo implica priorizar tareas alineadas con los objetivos y evitar la sobrecarga innecesaria.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Gestión del tiempo',
-      title: 'Buenas prácticas',
-      instruction: 'Seleccioná las prácticas que mejoran la gestión del tiempo.',
-      items: [
-        { text: 'Definir prioridades', correct: true },
-        { text: 'Postergar decisiones', correct: false },
-        { text: 'Delegar tareas', correct: true },
-        { text: 'Hacer todo al mismo tiempo', correct: false },
-        { text: 'Planificar actividades', correct: true }
-      ],
-      tutor: 'Pensá qué prácticas te ayudan a organizarte mejor.',
-      explanation: 'Priorizar, delegar y planificar mejora el uso del tiempo.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Empowerment',
-      title: 'Aplicación del empoderamiento',
-      instruction: 'Analizá el impacto del empowerment.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('empowerment') || v.includes('empoderamiento')) c++;
-        if (v.includes('autonomia') || v.includes('autonomía')) c++;
-        if (v.includes('responsabil')) c++;
-        if (v.includes('confia') || v.includes('confianza')) c++;
-        if (v.includes('compromiso')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué pasa cuando confiás en el equipo.',
-      explanation: 'El empowerment promueve la autonomía y la responsabilidad, fortaleciendo el compromiso del equipo.' // 
-    },
-    {
-      type: 'traffic',
-      badge: 'Empowerment',
-      title: 'Autonomía y responsabilidad',
-      instruction: 'Marcá las afirmaciones correctas respecto al empowerment.',
-      items: [
-        { text: 'El empowerment implica confiar y delegar.', color: 'green' },
-        { text: 'El empowerment implica abandonar al equipo.', color: 'red' },
-        { text: 'La autonomía favorece el compromiso.', color: 'green' }
-      ],
-      tutor: 'Pensá si empoderar es acompañar.',
-      explanation: 'Empoderar fortalece la participación y el compromiso.' // 
-    },
-    {
-      type: 'text',
-      badge: 'Trabajo en equipo',
-      title: 'Cooperación práctica',
-      instruction: 'Reconocé la importancia de la cooperación.',
-      validation: (raw) => {
-        if (!raw) return false;
-        const v = normalizar(raw);
-        let c = 0;
-        if (v.includes('equipo')) c++;
-        if (v.includes('cooperacion') || v.includes('cooperación')) c++;
-        if (v.includes('esfuerzo')) c++;
-        if (v.includes('objetivo') || v.includes('meta')) c++;
-        if (v.includes('juntos')) c++;
-        return c >= 2;
-      },
-      tutor: 'Pensá qué se logra trabajando juntos.',
-      explanation: 'La cooperación permite coordinar esfuerzos y alcanzar objetivos comunes con mayor eficacia.' // 
-    },
-    {
-      type: 'checklist',
-      badge: 'Trabajo en equipo',
-      title: 'Acciones cooperativas',
-      instruction: 'Seleccioná las acciones que favorecen el trabajo en equipo.',
-      items: [
-        { text: 'Apoyo entre integrantes', correct: true },
-        { text: 'Competencia interna constante', correct: false },
-        { text: 'Comunicación clara', correct: true },
-        { text: 'Objetivos compartidos', correct: true },
-        { text: 'Aislamiento del grupo', correct: false }
-      ],
-      tutor: 'Pensá qué acciones unen al grupo.',
-      explanation: 'La comunicación, el apoyo y los objetivos comunes fortalecen el equipo.' // 
-    }
-  ]
+    // ===================== PRÁCTICA =====================
+    practica: [
+        {
+            type: 'checklist',
+            badge: 'Liderazgo',
+            title: 'Acciones prácticas del líder',
+            instruction: 'Seleccioná las acciones propias de un liderazgo efectivo.',
+            items: [
+                { text: 'Comunicación clara', correct: true },
+                { text: 'Reconocimiento del esfuerzo', correct: true },
+                { text: 'Escucha activa', correct: true },
+                { text: 'Desinterés por el equipo', correct: false },
+                { text: 'Imposición constante', correct: false }
+            ],
+            tutor: 'Pensá qué acciones fortalecen el vínculo con el equipo.',
+            explanation: 'La escucha, la comunicación y el reconocimiento fortalecen el liderazgo.'
+        },
+        {
+            type: 'text',
+            badge: 'Motivación',
+            title: 'Aplicación práctica de la motivación',
+            instruction: 'Reconocé cómo se motiva a un equipo.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('motivac') || v.includes('aument') || v.includes('participa') || v.includes('tareas')) &&
+                    (v.includes('sentido') || v.includes('aumenta') || v.includes('promueve') || v.includes('reconoc'))
+                );
+            },
+            tutor: 'Pensá qué hace que una tarea valga la pena.',
+            explanation: 'La motivación aumenta cuando las tareas tienen sentido, se reconocen los esfuerzos y se promueve la participación.'
+        },
+        {
+            type: 'blanks',
+            badge: 'Gestión del equipo',
+            title: 'Compromiso grupal',
+            instruction: 'Completá las frases.<br>El compromiso aumenta cuando se asignan ______<br>La participación se fortalece con ______ clara<br>La confianza se construye con ______',
+            blanks: ['responsabili', 'comunica', 'coheren'],
+            tutor: 'Pensá en qué condiciones te sentís más involucrado.',
+            explanation: 'Responsabilidades, comunicación y coherencia fortalecen el compromiso.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Motivación',
+            title: 'Prácticas motivadoras',
+            instruction: 'Marca las afirmaciones correctas respecto a la motivación grupal.',
+            items: [
+                { text: 'Asignar responsabilidades favorece la motivación.', color: 'green' },
+                { text: 'Reconocer el esfuerzo mejora el compromiso.', color: 'green' },
+                { text: 'Ignorar los aportes del equipo motiva.', color: 'red' }
+            ],
+            tutor: 'Pensá qué acciones impulsan a participar.',
+            explanation: 'La motivación crece con responsabilidad y reconocimiento.'
+        },
+        {
+            type: 'text',
+            badge: 'Gestión del tiempo',
+            title: 'Organización diaria',
+            instruction: 'Analiza que implica organizar el tiempo.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('tiempo') || v.includes('importante')) &&
+                    (v.includes('planificación') || v.includes('Organizar') || v.includes('tareas') || v.includes('sobrecarga'))
+                );
+            },
+            tutor: 'Pensá si todo lo que hacés es igual de importante.',
+            explanation: 'Organizar el tiempo implica priorizar tareas alineadas con los objetivos y evitar la sobrecarga innecesaria.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Gestión del tiempo',
+            title: 'Buenas prácticas',
+            instruction: 'Seleccioná las prácticas que mejoran la gestión del tiempo.',
+            items: [
+                { text: 'Definir prioridades', correct: true },
+                { text: 'Postergar decisiones', correct: false },
+                { text: 'Delegar tareas', correct: true },
+                { text: 'Hacer todo al mismo tiempo', correct: false },
+                { text: 'Planificar actividades', correct: true }
+            ],
+            tutor: 'Pensá qué prácticas te ayudan a organizarte mejor.',
+            explanation: 'Priorizar, delegar y planificar mejora el uso del tiempo.'
+        },
+        {
+            type: 'text',
+            badge: 'Empowerment',
+            title: 'Aplicación del empoderamiento',
+            instruction: 'Analizá el impacto del empowerment.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('empowerment') || v.includes('autonomía') || v.includes('responsabilidad')) &&
+                    (v.includes('confiás') || v.includes('promueve') || v.includes('fortaleciendo') || v.includes('compromiso'))
+                );
+            },
+            tutor: 'Pensá qué pasa cuando confiás en el equipo.',
+            explanation: 'El empowerment promueve la autonomía y la responsabilidad, fortaleciendo el compromiso del equipo.'
+        },
+        {
+            type: 'traffic',
+            badge: 'Empowerment',
+            title: 'Autonomía y responsabilidad',
+            instruction: 'Marca las afirmaciones correctas respecto al empowerment.',
+            items: [
+                { text: 'El empowerment implica confiar y delegar.', color: 'green' },
+                { text: 'El empowerment implica confiar y delegar.', color: 'red' },
+                { text: 'La autonomía favorece el compromiso.', color: 'green' }
+            ],
+            tutor: 'Pensá si empoderar es acompañar.',
+            explanation: 'Empoderar fortalece la participación y el compromiso.'
+        },
+        {
+            type: 'text',
+            badge: 'Trabajo en equipo',
+            title: 'Cooperación práctica',
+            instruction: 'Reconocé la importancia de la cooperación.',
+            validation: (raw) => {
+                const v = normalizar(raw);
+                return (
+                    (v.includes('equipo') || v.includes('coopera') || v.includes('esfuerzos')) &&
+                    (v.includes('coordina') || v.includes('trabajando') || v.includes('alcanzar')) &&
+                    (v.includes('permite') || v.includes('juntos') || v.includes('eficacia'))
+                );
+            },
+            tutor: 'Pensá qué se logra trabajando juntos.',
+            explanation: 'La cooperación permite coordinar esfuerzos y alcanzar objetivos comunes con mayor eficacia.'
+        },
+        {
+            type: 'checklist',
+            badge: 'Trabajo en equipo',
+            title: 'Acciones cooperativas',
+            instruction: 'Seleccioná las acciones que favorecen el trabajo en equipo.',
+            items: [
+                { text: 'Apoyo entre integrantes', correct: true },
+                { text: 'Competencia interna constante', correct: false },
+                { text: 'Comunicación clara', correct: true },
+                { text: 'Objetivos compartidos', correct: true },
+
+                { text: 'Aislamiento del grupo', correct: false }
+            ],
+            tutor: 'Pensá qué acciones unen al grupo.',
+            explanation: 'La comunicación, el apoyo y los objetivos comunes fortalecen el equipo.'
+        }
+    ]
 };
 
         let currentModule = '';
